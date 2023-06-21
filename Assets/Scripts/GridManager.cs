@@ -1,0 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Numerics;
+using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
+
+public class GridManager : MonoBehaviour
+{
+    private static GridManager Instance;
+    
+    [SerializeField] GameObject cellPrefab;
+    [SerializeField] private int width, lenght;
+    [SerializeField] private Color color1, color2;
+    [SerializeField] private Color colorSelected;
+
+    private List<GameObject> cells;
+    private int selectedId;
+    private Color selectedColor;
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(this);
+        else
+            Instance = this;
+    }
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        cells = new List<GameObject>();
+        CreateGrid();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public static GridManager GetInstance()
+    {
+        return Instance;
+    }
+
+    public void SelectCell(int cellId)
+    {
+        //cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = 
+        selectedId = cellId;
+        selectedColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
+        //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
+        cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
+    }
+    
+    void CreateGrid()
+    {
+        int idPool = -1;
+        
+        for (int i = 0; i < lenght; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                GameObject cell = Instantiate(cellPrefab, 
+                    new Vector3(0f + j, 0f, 0f + i), 
+                    Quaternion.identity);
+                cell.name = $"Cell {j + 1}x{i + 1}";
+                if (i % 2 == 0) cell.GetComponent<CellBehavior>().Initialize(++idPool, idPool % 2 == 0 ? color2 : color1);
+                else cell.GetComponent<CellBehavior>().Initialize(++idPool, idPool % 2 == 0 ? color1 : color2);
+                
+                cells.Add(cell);
+            }
+        }
+    }
+}
