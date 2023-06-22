@@ -30,17 +30,21 @@ public class CellBehavior : MonoBehaviour
     {
         if (hasPipe) return;
         hasPipe = true;
-        Instantiate(pipeIPrefab, 
+        GameObject pipe = Instantiate(pipeIPrefab, 
             new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z), 
             Quaternion.identity);
+
+        pipe.GetComponent<PipeBehavior>().OnCell = cellId;
     }
 
     public void SetPipeL()
     {
         if (hasPipe) return;
-        Instantiate(pipeLPrefab, 
+        GameObject pipe = Instantiate(pipeLPrefab, 
             new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z),
             Quaternion.identity);
+        
+        pipe.GetComponent<PipeBehavior>().OnCell = cellId;
     }
 
     public void Initialize(int id, Color color)

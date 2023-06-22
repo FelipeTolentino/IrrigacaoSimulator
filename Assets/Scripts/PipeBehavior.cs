@@ -5,6 +5,14 @@ using UnityEngine;
 public class PipeBehavior : MonoBehaviour
 {
     private bool rotationCooldown;
+    private int onCell;
+
+    public int OnCell
+    {
+        get { return onCell; }
+        set { onCell = value;  }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
