@@ -50,19 +50,20 @@ public class GridManager : MonoBehaviour
     {
         if (!selectionCooldown)
         {
-            selectionCooldown = true;
-            Debug.Log($"current selected {selectedId}");
-            Debug.Log($"{cellId} selected");
-            if (selectedId != cellId && selectedId != -1)
-                cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
-
-            selectedId = cellId;
-            defaultColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
-            cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
+            if (selectedId != cellId)
+            {
+                selectionCooldown = true;
+                if (selectedId != -1)
+                    cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
             
-            yield return new WaitForSeconds(0.3f);
-            selectionCooldown = false;
-            //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
+                selectedId = cellId;
+                defaultColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
+                cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
+            
+                yield return new WaitForSeconds(0.3f);
+                selectionCooldown = false;
+                //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
+            }
         }
     }
     

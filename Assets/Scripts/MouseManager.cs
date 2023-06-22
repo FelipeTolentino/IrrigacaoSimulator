@@ -32,16 +32,24 @@ public class MouseManager : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            RaycastHit[] hits;
+            hits = Physics.RaycastAll(ray);
+            if (hits.Length > 0)
             {
-                if (hit.collider.gameObject.tag == "Pipe")
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    StartCoroutine(hit.collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
+                    if (hits[i].collider.gameObject.CompareTag("Cell"))
+                    {
+                        int cellId = hits[i].collider.gameObject.GetComponent<CellBehavior>().CellID;
+                        StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
+                    }
+                    if (hits[i].collider.gameObject.CompareTag("Pipe"))
+                    {
+                        StartCoroutine(hits[i].collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
+                    }
                 }
             }
-        }
+        }   
     }
 
 }
