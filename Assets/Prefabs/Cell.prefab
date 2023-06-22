@@ -143,4 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c58089e5e2e044d8b14540e8e040cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipePrefab: {fileID: 3457488302559691067, guid: 669c5f6497e3c8d4f810a2f2401527f4, type: 3}
+  pipeIPrefab: {fileID: 3457488302559691067, guid: 669c5f6497e3c8d4f810a2f2401527f4, type: 3}
+  pipeLPrefab: {fileID: 6127602760255186419, guid: a1a8823f6fb0a924c829bc4f0cb26e7d, type: 3}

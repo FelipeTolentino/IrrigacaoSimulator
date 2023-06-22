@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PipeBehavior : MonoBehaviour
 {
-    private bool rotationCooldown;
     private int onCell;
 
     public int OnCell
@@ -25,17 +24,10 @@ public class PipeBehavior : MonoBehaviour
         
     }
 
-    public IEnumerator RotatePipe()
+    public void RotatePipe()
     {
-        if (!rotationCooldown)
-        {
-            rotationCooldown = true;
-            transform.Rotate(Vector3.up, 90f);
-            if (transform.rotation.y >= 360)
-                transform.Rotate(Vector3.up, -360);
-
-            yield return new WaitForSeconds(0.3f);
-            rotationCooldown = false;
-        }
+        transform.Rotate(Vector3.up, 90f);
+        if (transform.rotation.y >= 360)
+            transform.Rotate(Vector3.up, -360);
     }
 }

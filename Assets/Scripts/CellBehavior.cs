@@ -7,11 +7,18 @@ public class CellBehavior : MonoBehaviour
     [SerializeField] private GameObject pipeIPrefab, pipeLPrefab;
     
     private int cellId;
-    private bool hasPipe = false;
+    private int pipeType;
+
+    private GameObject myPipe;
 
     public int CellID
     {
         get { return cellId; }
+    }
+
+    public int PipeType
+    {
+        get { return pipeType; }
     }
     
     // Start is called before the first frame update
@@ -28,23 +35,30 @@ public class CellBehavior : MonoBehaviour
 
     public void SetPipeI()
     {
-        if (hasPipe) return;
-        hasPipe = true;
+        if (pipeType == 1) return;
+        if (pipeType == 2)
+            Destroy(myPipe);
+        pipeType = 1;
         GameObject pipe = Instantiate(pipeIPrefab, 
             new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z), 
             Quaternion.identity);
 
         pipe.GetComponent<PipeBehavior>().OnCell = cellId;
+        myPipe = pipe;
     }
 
     public void SetPipeL()
     {
-        if (hasPipe) return;
+        if (pipeType == 2) return;
+        if (pipeType == 1)
+            Destroy(myPipe);
+        pipeType = 2;
         GameObject pipe = Instantiate(pipeLPrefab, 
             new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z),
             Quaternion.identity);
         
         pipe.GetComponent<PipeBehavior>().OnCell = cellId;
+        myPipe = pipe;
     }
 
     public void Initialize(int id, Color color)

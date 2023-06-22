@@ -16,22 +16,22 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            
+            foreach (var hit in hits)
             {
                 if (hit.collider.gameObject.CompareTag("Cell"))
                 {
                     int cellId = hit.collider.gameObject.GetComponent<CellBehavior>().CellID;
-                    StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
+                    GridManager.GetInstance().SelectCell(cellId);
                 }
             }
         }
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -45,8 +45,8 @@ public class MouseManager : MonoBehaviour
                     if (hit.collider.gameObject.CompareTag("Pipe"))
                     {
                         var pipe = hit.collider.gameObject.GetComponent<PipeBehavior>();
-                        StartCoroutine(pipe.RotatePipe());
-                        StartCoroutine(GridManager.GetInstance().SelectCell(pipe.OnCell));
+                        pipe.RotatePipe();
+                        GridManager.GetInstance().SelectCell(pipe.OnCell);
                     }
                 }
             }
@@ -55,8 +55,15 @@ public class MouseManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             int selectedCell = GridManager.GetInstance().SelectedCell;
-            
-            
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipeI();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipeL();
         }
     }
 
