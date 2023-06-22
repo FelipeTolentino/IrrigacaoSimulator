@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class MouseManager : MonoBehaviour
@@ -21,7 +22,7 @@ public class MouseManager : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.tag == "Cell")
+                if (hit.collider.gameObject.CompareTag("Cell"))
                 {
                     int cellId = hit.collider.gameObject.GetComponent<CellBehavior>().CellID;
                     StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
@@ -32,13 +33,29 @@ public class MouseManager : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+            RaycastHit[] hit;
+            
+            Debug.Log("Botao direito");
 
-            if (Physics.Raycast(ray, out hit))
+            hit = Physics.RaycastAll(ray);
+
+            if (hit.Length > 0)
             {
-                if (hit.collider.gameObject.tag == "Pipe")
+                Debug.Log("Raio atingiu algo");
+
+                for (int i = 0; i < hit.Length; i++)
                 {
-                    StartCoroutine(hit.collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
+                    if (hit[i].collider.gameObject.CompareTag("Cell"))
+                    {
+                        int cellId = hit[i].collider.gameObject.GetComponent<CellBehavior>().CellID;
+                        StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
+                    }
+                    
+                    if (hit[i].collider.gameObject.CompareTag("Pipe"))
+                    {
+                        Debug.Log("Comparação realizada");
+                        StartCoroutine(hit[i].collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
+                    }
                 }
             }
         }
