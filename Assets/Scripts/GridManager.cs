@@ -46,24 +46,19 @@ public class GridManager : MonoBehaviour
         return Instance;
     }
 
-    public IEnumerator SelectCell(int cellId)
+    public void SelectCell(int cellId)
     {
-        if (!selectionCooldown)
+        if (selectedId != cellId)
         {
-            if (selectedId != cellId)
-            {
-                selectionCooldown = true;
-                if (selectedId != -1)
-                    cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
+            selectionCooldown = true;
+            if (selectedId != -1)
+                cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
             
-                selectedId = cellId;
-                defaultColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
-                cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
+            selectedId = cellId;
+            defaultColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
+            cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
             
-                yield return new WaitForSeconds(0.3f);
-                selectionCooldown = false;
-                //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
-            }
+            //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
         }
     }
     
