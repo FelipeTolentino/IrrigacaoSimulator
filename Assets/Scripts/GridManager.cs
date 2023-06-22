@@ -19,6 +19,11 @@ public class GridManager : MonoBehaviour
     private Color defaultColor;
 
     private bool selectionCooldown = false;
+
+    public int SelectedCell
+    {
+        get { return selectedId; }
+    } 
     
     void Awake()
     {

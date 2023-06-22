@@ -50,7 +50,14 @@ public class MouseManager : MonoBehaviour
                     }
                 }
             }
-        }   
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            
+            
+        }
     }
 
 }
