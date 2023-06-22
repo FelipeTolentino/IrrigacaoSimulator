@@ -48,15 +48,19 @@ public class GridManager : MonoBehaviour
 
     public IEnumerator SelectCell(int cellId)
     {
+        
+        
         if (!selectionCooldown)
         {
             selectionCooldown = true;
-            Debug.Log($"current selected {selectedId}");
-            Debug.Log($"{cellId} selected");
+            Debug.Log($"selectedID: {selectedId}\tcellId: {cellId}");
+            //Debug.Log($"current selected {selectedId}");
+            //Debug.Log($"{cellId} selected");
             
             if (selectedId != cellId)
             {
                 // Pinta como default a cell anterior
+                
                 if(selectedId != -1)
                     cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
                 
@@ -65,14 +69,12 @@ public class GridManager : MonoBehaviour
                 defaultColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
                 cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
                 
-                yield return new WaitForSeconds(0.3f);
-                selectionCooldown = false;
-                //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
+                
             }
-            
-            
-            
         }
+        yield return new WaitForSeconds(0.3f);
+        selectionCooldown = false;
+        //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
     }
     
     void CreateGrid()

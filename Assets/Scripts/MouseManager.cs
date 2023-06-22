@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -37,19 +38,30 @@ public class MouseManager : MonoBehaviour
             
             hit = Physics.RaycastAll(ray);
 
+            GameObject cell = null;
+
             if (hit.Length > 0)
             {
-                for (int i = 0; i < hit.Length; i++)
+                
+                // Busca a celula do pipe no hit
+                foreach (var i in hit)
                 {
-                    if (hit[i].collider.gameObject.CompareTag("Cell"))
+                    if (i.collider.gameObject.CompareTag("Cell"))
+                        cell = i.collider.gameObject;
+                }
+                
+                // Busca o pipe no hit
+                foreach (var i in hit)
+                {
+                    if (i.collider.gameObject.CompareTag("Pipe"))
                     {
-                        int cellId = hit[i].collider.gameObject.GetComponent<CellBehavior>().CellID;
-                        StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
-                    }
-                    
-                    if (hit[i].collider.gameObject.CompareTag("Pipe"))
-                    {
-                        StartCoroutine(hit[i].collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
+                        if(cell != null)
+                        {
+                            int cellId = cell.GetComponent<CellBehavior>().CellID;
+                            StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
+                        }
+                        
+                        StartCoroutine(i.collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
                     }
                 }
             }
