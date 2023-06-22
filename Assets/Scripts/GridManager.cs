@@ -15,8 +15,11 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Color colorSelected;
 
     private List<GameObject> cells;
-    private int selectedId;
-    private Color selectedColor;
+    private int selectedId = -1;
+    private Color defaultColor;
+
+    private bool selectionCooldown = false;
+    
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -43,13 +46,24 @@ public class GridManager : MonoBehaviour
         return Instance;
     }
 
-    public void SelectCell(int cellId)
+    public IEnumerator SelectCell(int cellId)
     {
-        //cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = 
-        selectedId = cellId;
-        selectedColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
-        //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
-        cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
+        if (!selectionCooldown)
+        {
+            selectionCooldown = true;
+            Debug.Log($"current selected {selectedId}");
+            Debug.Log($"{cellId} selected");
+            if (selectedId != cellId && selectedId != -1)
+                cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
+
+            selectedId = cellId;
+            defaultColor = cells[selectedId].GetComponentInChildren<SpriteRenderer>().color;
+            cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = colorSelected;
+            
+            yield return new WaitForSeconds(0.3f);
+            selectionCooldown = false;
+            //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
+        }
     }
     
     void CreateGrid()

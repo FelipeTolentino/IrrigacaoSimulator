@@ -24,7 +24,7 @@ public class MouseManager : MonoBehaviour
                 if (hit.collider.gameObject.tag == "Cell")
                 {
                     int cellId = hit.collider.gameObject.GetComponent<CellBehavior>().CellID;
-                    GridManager.GetInstance().SelectCell(cellId);
+                    StartCoroutine(GridManager.GetInstance().SelectCell(cellId));
                 }
             }
         }
