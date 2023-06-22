@@ -67,8 +67,7 @@ public class GridManager : MonoBehaviour
             
             //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
         }
-        yield return new WaitForSeconds(0.3f);
-        selectionCooldown = false;
+
         //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
     }
     
