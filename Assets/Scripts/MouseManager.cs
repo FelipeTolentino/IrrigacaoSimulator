@@ -35,14 +35,10 @@ public class MouseManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hit;
             
-            Debug.Log("Botao direito");
-
             hit = Physics.RaycastAll(ray);
 
             if (hit.Length > 0)
             {
-                Debug.Log("Raio atingiu algo");
-
                 for (int i = 0; i < hit.Length; i++)
                 {
                     if (hit[i].collider.gameObject.CompareTag("Cell"))
@@ -53,7 +49,6 @@ public class MouseManager : MonoBehaviour
                     
                     if (hit[i].collider.gameObject.CompareTag("Pipe"))
                     {
-                        Debug.Log("Comparação realizada");
                         StartCoroutine(hit[i].collider.gameObject.GetComponent<PipeBehavior>().RotatePipe());
                     }
                 }
