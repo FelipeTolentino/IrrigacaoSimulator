@@ -17,11 +17,11 @@ public class MouseManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            
+            foreach (var hit in hits)
             {
-                if (hit.collider.gameObject.tag == "Cell")
+                if (hit.collider.gameObject.CompareTag("Cell"))
                 {
                     int cellId = hit.collider.gameObject.GetComponent<CellBehavior>().CellID;
                     GridManager.GetInstance().SelectCell(cellId);
@@ -48,8 +48,20 @@ public class MouseManager : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipeI();
+        }
         
-        if (Input.GetKeyDown(KeyCode.I)){}
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipeL();
+        }
     }
 
 }

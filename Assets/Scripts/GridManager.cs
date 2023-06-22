@@ -18,7 +18,15 @@ public class GridManager : MonoBehaviour
     private int selectedId = -1;
     private Color defaultColor;
 
-    private bool selectionCooldown = false;
+    public int SelectedCell
+    {
+        get { return selectedId; }
+    }
+
+    public List<GameObject> Cells
+    {
+        get { return cells; }
+    }
     
     void Awake()
     {
@@ -50,7 +58,6 @@ public class GridManager : MonoBehaviour
     {
         if (selectedId != cellId)
         {
-            selectionCooldown = true;
             if (selectedId != -1)
                 cells[selectedId].GetComponentInChildren<SpriteRenderer>().color = defaultColor;
             
