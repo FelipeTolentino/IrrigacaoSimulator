@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class MouseManager : MonoBehaviour
@@ -32,6 +34,7 @@ public class MouseManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
             RaycastHit[] hits;
             hits = Physics.RaycastAll(ray);
             
@@ -61,6 +64,20 @@ public class MouseManager : MonoBehaviour
             int selectedCell = GridManager.GetInstance().SelectedCell;
             var cells = GridManager.GetInstance().Cells;
             cells[selectedCell].GetComponent<CellBehavior>().SetPipeL();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipePlus();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipeT();
         }
     }
 
