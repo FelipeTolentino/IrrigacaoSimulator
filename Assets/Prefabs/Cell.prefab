@@ -126,9 +126,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2164506130937111112}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3636832143227217222
@@ -145,3 +153,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pipeIPrefab: {fileID: 3457488302559691067, guid: 669c5f6497e3c8d4f810a2f2401527f4, type: 3}
   pipeLPrefab: {fileID: 6127602760255186419, guid: a1a8823f6fb0a924c829bc4f0cb26e7d, type: 3}
+  pipePlusPrefab: {fileID: 4396831437207626034, guid: a413805c7b51f1d41975767fa29c2637, type: 3}
+  pipeTPrefab: {fileID: 106822416011420055, guid: ab3de3f288787164488026b6337d4920, type: 3}

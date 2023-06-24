@@ -65,6 +65,20 @@ public class MouseManager : MonoBehaviour
             var cells = GridManager.GetInstance().Cells;
             cells[selectedCell].GetComponent<CellBehavior>().SetPipeL();
         }
+        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipePlus();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            int selectedCell = GridManager.GetInstance().SelectedCell;
+            var cells = GridManager.GetInstance().Cells;
+            cells[selectedCell].GetComponent<CellBehavior>().SetPipeT();
+        }
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CellBehavior : MonoBehaviour
 {
-    [SerializeField] private GameObject pipeIPrefab, pipeLPrefab;
+    [SerializeField] private GameObject pipeIPrefab, pipeLPrefab, pipePlusPrefab, pipeTPrefab;
     
     private int cellId;
     private int pipeType;
@@ -36,7 +36,7 @@ public class CellBehavior : MonoBehaviour
     public void SetPipeI()
     {
         if (pipeType == 1) return;
-        if (pipeType == 2)
+        if (pipeType != 1)
             Destroy(myPipe);
         pipeType = 1;
         GameObject pipe = Instantiate(pipeIPrefab, 
@@ -50,10 +50,37 @@ public class CellBehavior : MonoBehaviour
     public void SetPipeL()
     {
         if (pipeType == 2) return;
-        if (pipeType == 1)
+        if (pipeType != 2)
             Destroy(myPipe);
         pipeType = 2;
         GameObject pipe = Instantiate(pipeLPrefab, 
+            new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z),
+            Quaternion.identity);
+        
+        pipe.GetComponent<PipeBehavior>().OnCell = cellId;
+        myPipe = pipe;
+    }
+    public void SetPipePlus()
+    {
+        if (pipeType == 3) return;
+        if (pipeType != 3)
+            Destroy(myPipe);
+        pipeType = 3;
+        GameObject pipe = Instantiate(pipePlusPrefab, 
+            new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z),
+            Quaternion.identity);
+        
+        pipe.GetComponent<PipeBehavior>().OnCell = cellId;
+        myPipe = pipe;
+    }
+    
+    public void SetPipeT()
+    {
+        if (pipeType == 4) return;
+        if (pipeType != 4)
+            Destroy(myPipe);
+        pipeType = 4;
+        GameObject pipe = Instantiate(pipeTPrefab, 
             new Vector3(transform.position.x, transform.position.y + 0.05f, transform.position.z),
             Quaternion.identity);
         
