@@ -67,6 +67,8 @@ public class GridManager : MonoBehaviour
             
             //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
         }
+
+        //Gizmos.DrawWireCube(cells[selectedCell].transform.position, new Vector3(1f, 1f, 1f));
     }
     
     void CreateGrid()
