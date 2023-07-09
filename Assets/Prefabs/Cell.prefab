@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4808905, g: 0.8679245, b: 0.33079386, a: 1}
   m_FlipX: 0
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3965492445354935612}
   - component: {fileID: 2616506161806389150}
-  - component: {fileID: 3636832143227217222}
+  - component: {fileID: 7503561720333018028}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Cell
@@ -139,7 +139,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3636832143227217222
+--- !u!114 &7503561720333018028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,10 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2164506130937111112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2c58089e5e2e044d8b14540e8e040cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b06783baad7b7849a7d87eeab63fb50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pipeIPrefab: {fileID: 3457488302559691067, guid: 669c5f6497e3c8d4f810a2f2401527f4, type: 3}
-  pipeLPrefab: {fileID: 6127602760255186419, guid: a1a8823f6fb0a924c829bc4f0cb26e7d, type: 3}
-  pipePlusPrefab: {fileID: 4396831437207626034, guid: a413805c7b51f1d41975767fa29c2637, type: 3}
-  pipeTPrefab: {fileID: 106822416011420055, guid: ab3de3f288787164488026b6337d4920, type: 3}
+  sprite: {fileID: 6962655522051499286}
