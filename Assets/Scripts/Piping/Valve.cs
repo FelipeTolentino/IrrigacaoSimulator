@@ -24,6 +24,27 @@ public class Valve : Piping {
 	protected override void Update() {
 		base.Update();
 	}
+	
+	protected internal override void UpdateFlow(int callerPos, int chainStartPos) {
+		CheckIncomingFlow();
+		CheckFlow();
+		CheckOutgoingFlow();
+
+		if (!open && !CheckChanges()) return;
+		prevFlowOrientation = (FlowOrientation[]) flowOrientation.Clone();
+		
+		var grid = Grid.GetInstance();
+		for (int side = 0; side < 4; side++) {
+			if (grid.IsPositionValid(adjacentPos[side]) &&
+			    adjacentPos[side] != callerPos &&
+			    adjacentPos[side] != chainStartPos) {
+				var adjacentPiping = grid.GetCell(adjacentPos[side]).GetPiping();
+				if (adjacentPiping?.source == false) {
+					adjacentPiping?.UpdateFlow(position, chainStartPos);
+				}
+			}
+		}
+	}
 
 	public override void Rotate() {
 		base.Rotate();

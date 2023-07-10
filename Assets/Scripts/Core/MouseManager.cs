@@ -47,17 +47,15 @@ public class MouseManager : MonoBehaviour {
 	void RightPress() {
 		if (Input.GetMouseButton(0)) {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit[] hits = Physics.RaycastAll(ray);
-
-			foreach (var hit in hits) {
-				if (hit.collider.gameObject.CompareTag("Cell")) {
-					var cell = hit.collider.gameObject.GetComponent<Cell>();
-					var toolbar = Toolbar.GetInstance();
-					if (toolbar.SelectedTool == 0)
-						cell.SetElement(Toolbar.GetInstance().SelectedElement);
-					else if (toolbar.SelectedTool == 2) {
-						cell.RemoveElement();
-					}
+			RaycastHit hit;
+			Physics.Raycast(ray, out hit);
+			if (hit.collider?.gameObject.CompareTag("Cell") == true) {
+				var cell = hit.collider.gameObject.GetComponent<Cell>();
+				var toolbar = Toolbar.GetInstance();
+				if (toolbar.SelectedTool == 0)
+					cell.SetElement(Toolbar.GetInstance().SelectedElement);
+				else if (toolbar.SelectedTool == 2) {
+					cell.RemoveElement();
 				}
 			}
 		}	
