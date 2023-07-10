@@ -22,7 +22,7 @@ public class Piping : Element {
 	protected bool hasFlow;                           // Indicates if this pipe has flow
 	protected bool[] hasConnection;                   // Indicates in which directions (L, U, R, D) the pipe can connect
 	protected FlowOrientation[] flowOrientation;      // Indicates the flow orientation on the pipe side (L, U, R, D) */
-	protected bool source;                            // Indicates if the pipe is a flow source
+	protected internal bool source;                            // Indicates if the pipe is a flow source
 	protected FlowOrientation[] prevFlowOrientation;  // Holds the previous flow orientation after the flow updates
 	
 	
@@ -118,7 +118,7 @@ public class Piping : Element {
 	   if has flow and where it will coming out). If there is any change in flow,
 	   update it's neighbors (but not the neighbor that updated it, and the update
 	   chain starter) */
-	protected void UpdateFlow(int callerPos, int chainStartPos) {
+	protected internal virtual void UpdateFlow(int callerPos, int chainStartPos) {
 		CheckIncomingFlow();
 		CheckFlow();
 		CheckOutgoingFlow();
@@ -140,7 +140,7 @@ public class Piping : Element {
 	}
 
 	/* Check if there is any change in flow orientation */
-	bool CheckChanges() {
+	protected bool CheckChanges() {
 		return !Enumerable.SequenceEqual(prevFlowOrientation, flowOrientation);
 	}
 	

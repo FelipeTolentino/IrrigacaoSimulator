@@ -72,10 +72,12 @@ public class Toolbar : MonoBehaviour {
 		var colorBlock = elementButtons[selectedElement].colors;
 		colorBlock.normalColor = Color.white;
 		elementButtons[selectedElement].colors = colorBlock;
-		
-		colorBlock = toolButtons[selectedTool - 1].colors;
-		colorBlock.normalColor = Color.white;
-		toolButtons[selectedTool - 1].colors = colorBlock;
+
+		if (selectedTool > 0) {
+			colorBlock = toolButtons[selectedTool - 1].colors;
+			colorBlock.normalColor = Color.white;
+			toolButtons[selectedTool - 1].colors = colorBlock;	
+		}
 		selectedTool = 0;
 
 		selectedElement = element;
