@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class MouseManager : MonoBehaviour {
 	// Start is called before the first frame update
+
+	private DetectMouse tb, ipct;
+	private Texture2D currentCursor;
 	void Start() { }
 
 	// Update is called once per frame
@@ -15,7 +20,7 @@ public class MouseManager : MonoBehaviour {
 		RightPress();
 		LeftClick();
 	}
-	
+
 	/* Casts a ray in the clicked position, if it hits a cell collider that
 	 contains an element and the inspect tool is selected, open the inspector. 
 	 If the cell has nothing, hide the inspector */
@@ -33,7 +38,7 @@ public class MouseManager : MonoBehaviour {
 							Inspector.GetInstance().Show(cell.GetElement());
 						else
 							Inspector.GetInstance().Hide();
-						
+
 						Grid.GetInstance().SelectCell(cell.ID);
 					}
 				}
@@ -52,13 +57,16 @@ public class MouseManager : MonoBehaviour {
 			if (hit.collider?.gameObject.CompareTag("Cell") == true) {
 				var cell = hit.collider.gameObject.GetComponent<Cell>();
 				var toolbar = Toolbar.GetInstance();
-				if (toolbar.SelectedTool == 0)
+				if (toolbar.SelectedTool == 0) {
 					cell.SetElement(Toolbar.GetInstance().SelectedElement);
+					Grid.GetInstance().SelectCell(cell.ID);
+				}
 				else if (toolbar.SelectedTool == 2) {
 					cell.RemoveElement();
+					Grid.GetInstance().SelectCell(cell.ID);
 				}
 			}
-		}	
+		}
 	}
 
 	/* Casts a ray in the clicked position, if it hits a cell collider,

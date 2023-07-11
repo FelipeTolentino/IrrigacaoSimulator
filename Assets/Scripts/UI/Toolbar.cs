@@ -16,7 +16,7 @@ public enum ToolType {
 
 public class Toolbar : MonoBehaviour {
 	private static Toolbar Instance;
-	[SerializeField] private GameObject toolbar;
+	[SerializeField] private GameObject toolbar, inspector;
 	[SerializeField] private List<Button> elementButtons;
 	[SerializeField] private List<Button> toolButtons;
 	[SerializeField] private Color highlightColor, selectedColor;
@@ -27,6 +27,9 @@ public class Toolbar : MonoBehaviour {
 	private int selectedElement = 0;
 	private int selectedTool = 1;
 
+	private DetectMouse tb, inpct;
+	private Texture2D currentCursor;
+	
 	public int SelectedElement {
 		get { return selectedElement; }
 		set { selectedElement = value; }
@@ -59,10 +62,18 @@ public class Toolbar : MonoBehaviour {
 			colorBlock.highlightedColor = highlightColor;
 			button.colors = colorBlock;
 		}
+
+		tb = toolbar.GetComponent<DetectMouse>();
+		inpct = inspector.GetComponent<DetectMouse>();
 	}
 
 	// Update is called once per frame
-	void Update() { }
+	void Update() {
+		if (tb.IsMouseOver() || inpct.IsMouseOver())
+			Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+			else
+				Cursor.SetCursor(currentCursor, Vector2.zero, CursorMode.Auto);
+	}
 
 	public static Toolbar GetInstance() {
 		return Instance;
@@ -85,8 +96,9 @@ public class Toolbar : MonoBehaviour {
 		colorBlock = elementButtons[selectedElement].colors;
 		colorBlock.normalColor = selectedColor;
 		elementButtons[selectedElement].colors = colorBlock;
-		
-		Cursor.SetCursor(placeCursor, new Vector2(placeCursor.width / 2, placeCursor.height / 2), CursorMode.Auto);
+
+		currentCursor = placeCursor;
+		Cursor.SetCursor(placeCursor, new Vector2(currentCursor.width / 2, placeCursor.height / 2), CursorMode.Auto);
 		
 		LayoutRebuilder.ForceRebuildLayoutImmediate(toolbar.GetComponent<RectTransform>());
 	}
@@ -106,10 +118,12 @@ public class Toolbar : MonoBehaviour {
 		toolButtons[selectedTool - 1].colors = colorBlock;
 
 		if (selectedTool == 1) {
-			Cursor.SetCursor(inspectCursor, Vector2.zero, CursorMode.Auto);
+			currentCursor = inspectCursor;
+			Cursor.SetCursor(currentCursor, Vector2.zero, CursorMode.Auto);
 		}
 		else if (selectedTool == 2) {
-			Cursor.SetCursor(removeCursor, Vector2.zero, CursorMode.Auto);
+			currentCursor = removeCursor;
+			Cursor.SetCursor(currentCursor, Vector2.zero, CursorMode.Auto);
 		}
 		
 		LayoutRebuilder.ForceRebuildLayoutImmediate(toolbar.GetComponent<RectTransform>());
